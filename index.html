@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            padding-top: 80px; /* Space for fixed header */
+        }
+        
+        /* Fixed navigation */
+        #Nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 15px 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #Nav img {
+            height: 40px;
+            width: auto;
+        }
+        
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #5A729F;
+        }
+        
+        /* Navigation menu */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        .nav-menu li {
+            min-width: 80px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #5A729F;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 4px;
+            background: white;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .nav-menu li:hover {
+            background: #f5f5f5;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        /* Section positioning */
+        section, footer {
+            scroll-margin-top: 80px; /* Space for fixed header */
+            padding: 40px 5%;
+        }
+        
+        /* Header section */
+        #Header {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .header-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .header-text {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .header-text h1 {
+            font-size: clamp(32px, 5vw, 50px); /* Responsive font size */
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .header-text p {
+            font-size: clamp(16px, 2vw, 18px);
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .header-image {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .header-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            max-width: 100%;
+        }
+        
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: transparent;
+            color: red;
+            border: 2px solid red;
+        }
+        
+        .btn-primary:hover {
+            background-color: red;
+            color: white;
+        }
+        
+        /* Products section */
+        #Products {
+            background-color: #f9f9f9;
+        }
+        
+        .products-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .products-title h2 {
+            font-size: clamp(28px, 4vw, 36px);
+            color: #333;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            color: #833e3e;
+            margin-bottom: 10px;
+            font-size: clamp(18px, 2vw, 22px);
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Footer */
+        #Footer {
+            background: linear-gradient(to right, #fcdede, #fce7e7);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            color: #5A729F;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .social-icons a {
+            color: #5A729F;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-5px);
+        }
+        
+        .social-icons .fa-facebook:hover { color: #4267B2; }
+        .social-icons .fa-twitter:hover { color: #1DA1F2; }
+        .social-icons .fa-instagram:hover { color: #E1306C; }
+        .social-icons .fa-pinterest:hover { color: #E60023; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            #Nav {
+                padding: 10px 5%;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 30px;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+            
+            section, footer {
+                scroll-margin-top: 70px;
+                padding: 30px 5%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .header-text {
+                order: 2;
+            }
+            
+            .header-image {
+                order: 1;
+            }
+            
+            .product-img {
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-menu {
+                width: 100%;
+            }
+            
+            .header-text h1 {
+                font-size: 28px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="Header">
+        <nav id="Nav">
+            <img src="images/logo.png" alt="OnlineShop logo">
+            
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#Header"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#Products"><i class="fas fa-shopping-bag"></i> Products</a></li>
+                <li><a href="#Footer"><i class="fas fa-info-circle"></i> Footer</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Give Your Workout A New Style!</h1>
+                <p>Success isn't always about greatness. It's about consistency. Consistent hard work gains success. Greatness will come.</p>
+                <a href="#Products" class="btn btn-primary">Explore Now</a>
+            </div>
+            
+            <div class="header-image">
+                <img src="images/image1.png" alt="Fitness apparel">
+            </div>
+        </div>
+    </header>
+
+    <section id="Products">
+        <div class="products-title">
+            <h2>Our Products</h2>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="images/product1.jpg" alt="Puma T-Shirt" class="product-img">
+                <div class="product-info">
+                    <h3>Puma Men's Black Chevron Logo T-Shirt</h3>
+                    <p>Elevate your casual style with this Puma Men's Black T-Shirt, designed for those who appreciate comfort with a touch of sporty flair.</p>
+                    <a href="#" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="images/product2.jpg" alt="Roadster Watch" class="product-img">
+                <div class="product-info">
+                    <h3>Roadster Men's Black Dial Leather Strap Watch</h3>
+                    <p>Add a bold statement to your wrist with the Roadster Men's Black Dial Watch, designed for the modern man.</p>
+                    <a href="#" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="images/product3.jpg" alt="Sneakers" class="product-img">
+                <div class="product-info">
+                    <h3>Premium Comfort & Street-Ready Style</h3>
+                    <p>Step up your sneaker game with these sleek, high-performance kicks designed for all-day comfort.</p>
+                    <a href="#" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="images/product4.jpg" alt="Sport Trousers" class="product-img">
+                <div class="product-info">
+                    <h3>Ultimate Performance & Comfort – Sport Trousers</h3>
+                    <p>Engineered for movement and style, these high-performance sport trousers are designed to keep up with your active lifestyle.</p>
+                    <a href="#" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="Footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Online Shop. All rights reserved.</p>
+            
+            <div class="social-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.pinterest.com" target="_blank"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle (optional - can be removed if you want pure CSS)
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link (optional)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
